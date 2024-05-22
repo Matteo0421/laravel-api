@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse d-flex justify-content-between " id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-10 ">
               <li class="nav-item">
                 <a class="nav-link " aria-current="page" href="{{ route('admin.home')}}">Home</a>
               </li>
