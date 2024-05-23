@@ -1,0 +1,23 @@
+
+.main-wrapper{
+    height: calc(100vh - 50px);
+    .content{
+        overflow: auto;
+        width: 100%;
+    }
+}
+
+aside{
+    width: 150px;
+}i{
+    font-size: .6rem;
+}a{
+    color: white;
+}
+
+input{
+    border: none;
+    outline: none
+}
+
+

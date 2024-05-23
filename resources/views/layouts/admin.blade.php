@@ -18,8 +18,14 @@
 
     @include('admin.partials.header')
 
-    @include('admin.partials.main')
+    <div class="main-wrapper d-flex ">
+        @include('admin.partials.aside')
 
-    @yield('content')
+        <div class="content">
+            @yield('content')
+        </div>
+    </div>
+
+
 </body>
 </html>

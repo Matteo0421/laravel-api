@@ -15,12 +15,12 @@ class ProjectTableSeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for($i = 0;$i <200; $i++){
+        for($i = 0;$i <5; $i++){
             $new_project = new Project();
-            $new_project->title  = $faker->sentence();
+            $new_project->title  = $faker->words(3, true);
             $new_project->slug  = Helper::generateSlug($new_project, Project::class);
-            $new_project->description  = $faker->paragraphs(3, true);
-            $new_project->language  = $faker->sentence();
+            $new_project->description  = $faker->paragraphs(1, true);
+            $new_project->language  = $faker->words(1, true);
 
             $new_project->save();
         }
