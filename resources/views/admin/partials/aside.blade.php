@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{{route('admin.types.index')}}">
                     <i class="fa-solid fa-signal  p-2 me-1 mt-2"> Tecnologie usate</i>
                 </a>
             </li>
