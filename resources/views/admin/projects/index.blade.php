@@ -1,58 +1,71 @@
+
+
 @extends('layouts.admin')
 
 @section('content')
 
-<h2 class="p-3">I miei Progettiiiii</h2>
+<div class="container">
+    <h1 class="text-center m-4 text-white  ">I MIEI PROGETTI</h1>
 
-@if (session('error'))
+    @if (session('error'))
 
-<div class="alert alert-danger" role="alert">
-    {{session('error')}}
-</div>
-@endif
+    <div class="alert alert-danger" role="alert">
+        {{session('error')}}
+    </div>
+    @endif
 
-@if (session('succes'))
+    @if (session('succes'))
 
-<div class="alert alert-succes" role="alert">
-    {{session('succes')}}
-</div>
-@endif
+    <div class="alert alert-succes" role="alert">
+        {{session('succes')}}
+    </div>
+    @endif
 
-<div class="d-flex my-4 p-3" >
-    <form action="{{route('admin.projects.store')}}" method="POST" class="d-flex">
-        @csrf
-        <input type="search" placeholder="Nuovo Progetto" aria-label="Search" class="form-control me-2">
-        <button class="btn btn-outline-success " type='submit'>invia</button>
-    </form>
-</div>
+<table class="table ">
+    <thead>
+      <tr>
+        <th scope="col">TITOLO</th>
+        <th scope="col">DESCRIZIONE</th>
+        <th scope="col">LINGUAGGIO</th>
+        <th scope="col">IMG</th>
+        <th scope="col">AZIONI</th>
 
-<div >
-    <table class="table w-75 m-3 ">
-        <thead>
-          <tr>
-            <th scope="col">Titolo</th>
-            {{-- <th scope="col">Descrizione </th>
-            <th scope="col">Linguaggio di Programmazione</th> --}}
-            <th scope="col">Azioni</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach ($projects as $item )
-            <tr>
-                <td>
-                    <input type="text" value="{{$item->title}}">
-                </td>
-                {{-- <td>{{$item->description}}</td>
-                <td>{{$item->language}}</td> --}}
-                <td class="d-flex">
-                    <button class="btn btn-warning "><i class="fa-solid fa-pencil"></i></button>
-                    <button class="btn btn-danger "><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-              </tr>
-            @endforeach
+      </tr>
+    </thead>
+    <tbody>
+        @foreach ($projects as $project  )
+
+
+        <tr>
+            <th >{{$project->title}}</th>
+            <th >{{$project->description}}</th>
+            <th >{{$project->language}}</th>
+            <th >mettere immagini nel caso</th>
+            <th class="d-flex ">
+              <a href="{{ route('admin.projects.show', $project->id)}}" class="btn btn-danger"><i class="fa-regular fa-eye"></i></a>
+              <a href="{{ route('admin.projects.edit' , $project)}}" class="btn btn-danger"><i class="fa-solid fa-pencil"></i></a>
+
+              <form
+               action="{{route('admin.projects.destroy', $project)}}"
+               method="POST"
+               onsubmit="return confirm('sei sicuro di voler eliminare {{ $project->title}}?')"
+               >
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+
+
+             </form>
+            </th>
+
+        </tr>
+        @endforeach
+
 
         </tbody>
-    </table>
+  </table>
+
+
 </div>
 
 @endsection
