@@ -15,7 +15,7 @@ class ProjectTableSeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for($i = 0;$i <5; $i++){
+        for($i = 0;$i <35; $i++){
             $new_project = new Project();
             $new_project->title  = $faker->words(3, true);
             $new_project->slug  = Helper::generateSlug($new_project, Project::class);
