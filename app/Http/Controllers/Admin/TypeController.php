@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Functions\Helper;
 use App\Models\Type;
-
+use App\Functions\Helper;
 
 class TypeController extends Controller
 {
@@ -18,31 +17,31 @@ class TypeController extends Controller
         $types = Type::all();
         return view('admin.types.index', compact('types'));
     }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Effettua una ricerca per verificare se il tipo esiste già
+        $exists = Type::where('title', $request->title)->first();
+
+        // Se il tipo esiste già, reindirizza all'indice dei tipi con un messaggio di errore
+        if ($exists) {
+            return redirect()->route('admin.types.index')->with('error', 'Il Progetto già esiste.');
+        }
+
+        // Altrimenti, crea un nuovo tipo
+        $newType = new Type();
+        $newType->title = $request->title;
+        $newType->categories = $request->categories;
+
+        // Genera lo slug
+        $newType->slug = Helper::generateSlug($newType->title, new Type());
+
+        // Salva il tipo
+        $newType->save();
+
+        // Reindirizza all'indice dei tipi con un messaggio di successo
+        return redirect()->route('admin.types.index')->with('success', 'Progetto creato con successo.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -51,23 +50,31 @@ class TypeController extends Controller
     {
         return view('admin.types.edit', compact('type'));
     }
+/**
+ * Update the specified resource in storage.
+ */
+public function update(Request $request, Type $type)
+{
+    $request->validate([
+        'title' => 'required|string|max:100',
+        'categories' => 'required|string|max:120',
+    ]);
 
+    $type->title = $request->title;
+    $type->categories = $request->categories;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Type $type)
-    {
-        $request->validate([
-            'title' => 'required|string|max:100',
-            'categories' => 'required|string|max:120',
-        ]);
-
-        $type->update($request->all());
-
-        return redirect()->route('admin.types.index')
-            ->with('success', 'Tipologia aggiornata con successo!');
+    // Aggiorniamo lo slug solo se il titolo è stato modificato
+    if ($request->title !== $type->getOriginal('title')) {
+        $type->slug = Helper::generateSlug($request->title, new Type());
     }
+
+    $type->save();
+
+    return redirect()->route('admin.types.index')->with('success', 'Progetto aggiornato con successo');
+}
+
+
+
     /**
      * Remove the specified resource from storage.
      */
@@ -75,7 +82,6 @@ class TypeController extends Controller
     {
         $type->delete();
 
-        return redirect()->route('admin.types.index')
-            ->with('success', 'Tipologia eliminata con successo!');
+        return redirect()->route('admin.types.index')->with('success', 'Tipo eliminato con successo.');
     }
 }

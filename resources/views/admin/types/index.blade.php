@@ -2,37 +2,60 @@
 
 @section('content')
 
-<div class="container">
-    <h1 class="text-center m-4 ">Tipologie</h1>
+<h2 class="p-3">Le tecnologie Usate</h2>
 
-    <table class="table table-striped table-bordered">
-        <thead>
+@if (session('error'))
+<div class="alert alert-danger p-3" role="alert">
+    {{ session('error') }}
+</div>
+@endif
+
+@if (session('success'))
+<div class="alert alert-success p-3" role="alert">
+    {{ session('success') }}
+</div>
+@endif
+
+<div class="d-flex my-4 p-3">
+    <form action="{{ route('admin.types.store') }}" method="POST" class="d-flex">
+        @csrf
+        <input type="search" name="title" placeholder="Nuova Progetto" aria-label="Search" class="form-control me-2">
+        <input type="search" name="categories" placeholder="Linguaggio Usato" aria-label="Search" class="form-control me-2">
+        <button class="btn btn-outline-success" type='submit'>Invia</button>
+    </form>
+</div>
+
+<div>
+    <table class="table table-striped table-bordered w-75 m-3">
+        <thead class="table-dark">
             <tr>
-                <th scope="col">Titolo</th>
-                <th scope="col">Categorie</th>
+                <th scope="col">Nome Progetto</th>
+                <th scope="col">Linguaggio Usato</th>
                 <th scope="col">Azioni</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($types as $type)
-                <tr>
-                    <td>{{ $type->title }}</td>
-                    <td>{{ $type->categories }}</td>
-                    <td>
-                        <div class="d-flex">
-                            <a href="{{ route('admin.types.edit', $type->id) }}" class="btn btn-primary btn-sm me-1">
-                                <i class="fa-solid fa-pencil"></i> Modifica
-                            </a>
-                            <form action="{{ route('admin.types.destroy', $type->id) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare {{ $type->title }}?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i> Elimina
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <form action="{{ route('admin.types.update', $type->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="text" name="title" value="{{ $type->title }}" class="form-control">
+                </td>
+                <td>
+                    <input type="text" name="categories" value="{{ $type->categories }}" class="form-control">
+                </td>
+                <td class="d-flex">
+                    <button type="submit" class="btn btn-warning btn-sm ms-2 me-2"><i class="fa-solid fa-pencil"></i></button>
+                    </form>
+                    <form action="{{ route('admin.types.destroy', $type->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler eliminare questa tecnologia?')"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>

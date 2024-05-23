@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{{route('admin.tecnologies.index')}}">
                     <i class="fa-solid fa-signal  p-2 me-1 mt-2"> Tipo Progetto</i>
                 </a>
             </li>
