@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Tencology;
+use App\Models\Tecnology;
 use App\Functions\Helper;
 use Faker\Generator as Faker;
 
@@ -16,9 +16,9 @@ class TecnologyTableSeder extends Seeder
     public function run(Faker $faker): void
     {
         for($i = 0;$i <200; $i++){
-            $new_tecnology = new Tencology();
+            $new_tecnology = new Tecnology();
             $new_tecnology->title  = $faker->sentence();
-            $new_tecnology->slug  = Helper::generateSlug($new_tecnology, Tencology::class);
+            $new_tecnology->slug  = Helper::generateSlug($new_tecnology, Tecnology::class);
             $new_tecnology->language  = $faker->sentence();
             $new_tecnology->file  = $faker->numberBetween(1, 500);
 

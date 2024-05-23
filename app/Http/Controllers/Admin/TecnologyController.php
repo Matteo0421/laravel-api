@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tecnology;
 use App\Functions\Helper;
+use App\Http\Requests\TecnologyRequest;
 
 
 class TecnologyController extends Controller
@@ -15,82 +16,49 @@ class TecnologyController extends Controller
      */
     public function index()
     {
-        $tencologies = Tecnology::all();
-        return view('admin.tecnologies.index', compact('tencologies'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.tencologies.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|unique:tencologies|max:255',
-            'language' => 'required',
-            'file' => 'required|integer',
-        ]);
-
-        $newTecnology = new Tecnology();
-        $newTecnology->title = $request->title;
-        $newTecnology->language = $request->language;
-        $newTecnology->file = $request->file;
-
-        // Genera lo slug
-        $newTecnology->slug = Helper::generateSlug($request->title, new Tecnology());
-
-        // Salva la tecnologia
-        $newTecnology->save();
-
-        return redirect()->route('admin.tencologies.index')->with('success', 'Tecnologia aggiunta con successo');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tecnology $Tecnology)
-    {
-        return view('admin.tencologies.show', compact('Tecnology'));
+        $tecnologies = Tecnology::all();
+        $tecnologies = Tecnology::paginate(8);
+        return view('admin.tecnologies.index', compact('tecnologies'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tecnology $Tecnology)
+    public function edit(Tecnology $tecnology)
     {
-        return view('admin.tencologies.edit', compact('Tecnology'));
+        return view('admin.tecnologies.edit', compact('tecnology'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tecnology $Tecnology)
+    public function update(Request $request, Tecnology $tecnology)
     {
         $request->validate([
-            'title' => 'required|unique:tencologies|max:255',
-            'language' => 'required',
-            'file' => 'required|integer',
+            'title' => 'required|min:3|max:100',
+            'language' => 'required|min:2|max:100',
+            'file' => 'required|min:3|max:255', // Esempio di validazione per il campo file
         ]);
 
-        $Tecnology->update($request->all());
+        $tecnology->update($request->all());
 
-        return redirect()->route('admin.tencologies.index')->with('success', 'Tecnologia aggiornata con successo');
+        return redirect()->route('admin.tecnologies.show', $tecnology);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Tecnology $tecnology)
+    {
+        return view('admin.tecnologies.show', compact('tecnology'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tecnology $Tecnology)
+    public function destroy(Tecnology $tecnology)
     {
-        $Tecnology->delete();
-
-        return redirect()->route('admin.tencologies.index')->with('success', 'Tecnologia eliminata con successo');
+        $tecnology->delete();
+        return redirect()->route('admin.tecnologies.index')->with('success', 'Tecnology deleted successfully');
     }
 }

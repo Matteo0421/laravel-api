@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h2 class="p-3">Le tecnologie Usate</h2>
+<h2 class="p-3">Tipologia Progetto</h2>
 
 @if (session('error'))
 <div class="alert alert-danger p-3" role="alert">

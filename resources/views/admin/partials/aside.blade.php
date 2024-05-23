@@ -13,12 +13,12 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.types.index')}}">
+                <a href="{{route('admin.tecnologies.index')}}">
                     <i class="fa-solid fa-signal  p-2 me-1 mt-2"> Tecnologie usate</i>
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.tecnologies.index')}}">
+                <a href="{{route('admin.types.index')}}">
                     <i class="fa-solid fa-signal  p-2 me-1 mt-2"> Tipo Progetto</i>
                 </a>
             </li>
