@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th scope="col">TITOLO</th>
+                <th scope="col">CATEGORIA</th>
                 <th scope="col">DESCRIZIONE</th>
                 <th scope="col">LINGUAGGIO</th>
                 <th scope="col">IMG</th>
@@ -19,6 +20,7 @@
             @foreach ($projects as $project)
                 <tr>
                     <td>{{ $project->title }}</td>
+                    <td>{{ $project->type->categories }}</td>
                     <td>{{ $project->description }}</td>
                     <td>{{ $project->language }}</td>
                     <td>

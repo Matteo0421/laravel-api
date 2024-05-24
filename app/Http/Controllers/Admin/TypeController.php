@@ -19,6 +19,15 @@ class TypeController extends Controller
 
         return view('admin.types.index', compact('types'));
     }
+
+
+    public function typeProjects(){
+        $types = Type::all();
+        return view('admin.types.type-projects', compact('types'));
+
+
+    }
+
     public function store(Request $request)
     {
         // Effettua una ricerca per verificare se il tipo esiste già

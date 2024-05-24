@@ -22,6 +22,11 @@
                     <i class="fa-solid fa-signal  p-2 me-1 mt-2"> Tipo Progetto</i>
                 </a>
             </li>
+            <li>
+                <a href="{{route('admin.type_projects')}}">
+                    <i class="fa-solid fa-signal  p-2 me-1 mt-2"> Elenco Progetti per categoria</i>
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>
