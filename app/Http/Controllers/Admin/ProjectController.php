@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Functions\Helper;
 use App\Http\Requests\ProjectRequest;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProjectController extends Controller
@@ -35,10 +36,19 @@ class ProjectController extends Controller
     {
         $form_data = $request->all();
 
+        if ($request->hasFile('image')) {
+            $image_path = Storage::put('uploads', $form_data['image']);
+            $original_name = $request->file('image')->getClientOriginalName();
+            $form_data['image'] = $image_path;
+            $form_data['image_original_name'] = $original_name;
+        }
+
         $new_project = new Project();
         $new_project->title = $form_data['title'];
         $new_project->description = $form_data['description'];
         $new_project->language = $form_data['language'];
+        $new_project->image = $form_data['image'] ?? null;
+        $new_project->image_original_name = $form_data['image_original_name'] ?? null;
 
         // Genera lo slug
         $new_project->slug = Helper::generateSlug($new_project->title, new Project());

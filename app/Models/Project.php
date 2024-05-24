@@ -14,5 +14,7 @@ class Project extends Model
         'slug',
         'description',
         'language',
+        'image',
+        'image_original_name',
     ];
 }

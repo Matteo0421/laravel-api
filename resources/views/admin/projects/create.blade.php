@@ -17,7 +17,10 @@
 
     <div class="row">
         <div class="col-md-6">
-            <form action="{{ route('admin.projects.store') }}" method="POST">
+           <form
+              action="{{ route('admin.projects.store') }}"
+              method="POST"
+              enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Titolo</label>
@@ -57,6 +60,18 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="image" class="form-label">Immagine</label>
+                 <input
+                   name="image"
+                   type="file"
+                   onchange="showImage(event)"
+                   class="form-control @error('image') is-invalid @enderror"
+                   id="image">
+
+                   <img class="thumb mt-3" id="thumb" src="{{ asset('/image/no-image.jpg') }}" alt="Default Image" style="width: 150; height: auto;">
+                </div>
+
                 <div class="mb-4 mt-4">
                     <button class="btn btn-danger" type="submit">Invia il nuovo Progetto</button>
                     <button class="btn btn-warning" type="reset">Reset</button>
@@ -65,6 +80,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    function showImage(event){
+        const thumb = document.getElementById('thumb');
+        thumb.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
 
 @endsection
 

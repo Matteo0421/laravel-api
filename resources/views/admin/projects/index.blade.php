@@ -21,7 +21,9 @@
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->description }}</td>
                     <td>{{ $project->language }}</td>
-                    <td>mettere immagini nel caso</td>
+                    <td>
+                        <img class="thumb mt-3"  src="{{ asset('storage/' . $project->image) }}"   onerror="this.src='/image/no-image.jpg'  ">
+                    </td>
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-danger btn-sm me-1">
