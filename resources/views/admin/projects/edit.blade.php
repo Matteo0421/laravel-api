@@ -58,14 +58,46 @@
                     @enderror
                 </div>
 
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Immagine</label>
+                 <input
+                   name="image"
+                   type="file"
+                   onchange="showImage(event)"
+                   class="form-control @error('image') is-invalid @enderror"
+                   id="image">
+
+                   <img class="thumb mt-3" id="thumb" src="{{ asset('/image/no-image.jpg') }}" alt="Default Image" style="width: 150; height: auto;">
+                </div>
+
                 <div class="mb-4">
                     <button class="btn btn-danger" type="submit">Aggiorna il Progetto</button>
-                    <button class="btn btn-warning" type="reset">Reset</button>
+                    <button class="btn btn-warning" type="reset" onclick="resetImage()">Reset</button>
                 </div>
+
+
             </form>
         </div>
     </div>
 </div>
 
+<script>
+    function showImage(event){
+        const thumb = document.getElementById('thumb');
+        if (event.target.files.length > 0) {
+            thumb.src = URL.createObjectURL(event.target.files[0]);
+        }
+    }
+
+    function resetImage() {
+        const thumb = document.getElementById('thumb');
+        thumb.src = "{{ asset('/image/no-image.jpg') }}";
+    }
+</script>
+
+
 @endsection
+
+
 

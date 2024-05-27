@@ -3,9 +3,16 @@
 @section('content')
 
 <div class="container">
-    <h1 class="text-center m-4 ">I MIEI PROGETTI</h1>
+    <h1 class="text-center m-4">I MIEI PROGETTI</h1>
 
-    <table class="table table-striped table-bordered">
+    <!-- Barra di ricerca -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="search-input" class="form-control" placeholder="Cerca progetti...">
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered" id="projects-table">
         <thead>
             <tr>
                 <th scope="col">TITOLO</th>
@@ -19,12 +26,12 @@
         <tbody>
             @foreach ($projects as $project)
                 <tr>
-                    <td>{{ $project->title }}</td>
-                    <td>{{ $project->type->categories }}</td>
-                    <td>{{ $project->description }}</td>
-                    <td>{{ $project->language }}</td>
+                    <td class="project-title">{{ $project->title }}</td>
+                    <td class="project-category">{{ $project->type->categories ?? '' }}</td>
+                    <td class="project-description">{{ $project->description }}</td>
+                    <td class="project-language">{{ $project->language }}</td>
                     <td>
-                        <img class="thumb mt-3"  src="{{ asset('storage/' . $project->image) }}"   onerror="this.src='/image/no-image.jpg'  ">
+                        <img class="thumb mt-3" src="{{ asset('storage/' . $project->image) }}" onerror="this.src='{{ asset('image/no-image.jpg') }}'" alt="Project Image" style="width: 150px; height: auto;">
                     </td>
                     <td>
                         <div class="d-flex">
@@ -48,7 +55,6 @@
         </tbody>
     </table>
 
-
     <div class="row justify-content-center">
         <div class="col-md-6">
             {{ $projects->links('pagination::bootstrap-5') }}
@@ -56,4 +62,28 @@
     </div>
 </div>
 
+<script>
+    document.getElementById('search-input').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const projectsTable = document.getElementById('projects-table');
+        const rows = projectsTable.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) { // Start at 1 to skip the table header
+            const title = rows[i].getElementsByClassName('project-title')[0].innerText.toLowerCase();
+            const category = rows[i].getElementsByClassName('project-category')[0].innerText.toLowerCase();
+            const description = rows[i].getElementsByClassName('project-description')[0].innerText.toLowerCase();
+            const language = rows[i].getElementsByClassName('project-language')[0].innerText.toLowerCase();
+
+            if (title.includes(searchValue) || category.includes(searchValue) || description.includes(searchValue) || language.includes(searchValue)) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+
+
+    });
+</script>
+
 @endsection
+

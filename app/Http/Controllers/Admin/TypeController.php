@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Functions\Helper;
+use Illuminate\Support\Facades\Validator;
 
 class TypeController extends Controller
 {
@@ -27,9 +28,16 @@ class TypeController extends Controller
 
 
     }
-
-    public function store(Request $request)
+   public function store(Request $request)
     {
+        $request->validate([
+            'title' => ['required', 'string', 'max:100'],
+            'categories' => ['required', 'string', 'max:120'],
+        ], [
+            'title.required' => 'Il campo Titolo è obbligatorio.',
+            'categories.required' => 'Il campo Linguaggio Usato è obbligatorio.',
+        ]);
+
         // Effettua una ricerca per verificare se il tipo esiste già
         $exists = Type::where('title', $request->title)->first();
 
@@ -52,7 +60,6 @@ class TypeController extends Controller
         // Reindirizza all'indice dei tipi con un messaggio di successo
         return redirect()->route('admin.types.index')->with('success', 'Progetto creato con successo.');
     }
-
 
     /**
      * Show the form for editing the specified resource.
