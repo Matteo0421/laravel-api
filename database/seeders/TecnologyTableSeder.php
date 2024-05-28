@@ -15,14 +15,29 @@ class TecnologyTableSeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for($i = 0;$i <200; $i++){
+
+        $data = ['html', 'Css', 'Javascript', 'PHP', 'C++', 'Angular'];
+
+
+        foreach($data as $item){
             $new_tecnology = new Tecnology();
-            $new_tecnology->title  = $faker->sentence();
+            $new_tecnology->title = $item;
             $new_tecnology->slug  = Helper::generateSlug($new_tecnology, Tecnology::class);
             $new_tecnology->language  = $faker->sentence();
             $new_tecnology->file  = $faker->numberBetween(1, 500);
 
             $new_tecnology->save();
+
         }
+
+        // for($i = 0;$i <200; $i++){
+        //     $new_tecnology = new Tecnology();
+        //     $new_tecnology->title  = $faker->sentence();
+        //     $new_tecnology->slug  = Helper::generateSlug($new_tecnology, Tecnology::class);
+        //     $new_tecnology->language  = $faker->sentence();
+        //     $new_tecnology->file  = $faker->numberBetween(1, 500);
+
+        //     $new_tecnology->save();
+        // }
     }
 }

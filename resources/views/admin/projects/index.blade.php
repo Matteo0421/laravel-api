@@ -18,6 +18,7 @@
                 <th scope="col">TITOLO</th>
                 <th scope="col">CATEGORIA</th>
                 <th scope="col">DESCRIZIONE</th>
+                <th scope="col">TECNOLOGIE</th>
                 <th scope="col">LINGUAGGIO</th>
                 <th scope="col">IMG</th>
                 <th scope="col">AZIONI</th>
@@ -29,6 +30,13 @@
                     <td class="project-title">{{ $project->title }}</td>
                     <td class="project-category">{{ $project->type->categories ?? '' }}</td>
                     <td class="project-description">{{ $project->description }}</td>
+                    <td class="project-tecnology">
+                        @forelse ($project->tecnologies as $tecnology )
+                            <span class="badge text-bg-danger">{{$tecnology->title}}</span>
+                        @empty
+                            - no results -
+                        @endforelse
+                    </td>
                     <td class="project-language">{{ $project->language }}</td>
                     <td>
                         <img class="thumb mt-3" src="{{ asset('storage/' . $project->image) }}" onerror="this.src='{{ asset('image/no-image.jpg') }}'" alt="Project Image" style="width: 150px; height: auto;">

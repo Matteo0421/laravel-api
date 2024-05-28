@@ -15,4 +15,8 @@ class Tecnology extends Model
         'language',
         'file',
     ];
+
+    public function projects(){
+        return $this->belongsToMany(Project::class);
+    }
 }

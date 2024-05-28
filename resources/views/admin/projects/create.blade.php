@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <button class="btn btn-danger" type="submit">Aggiorna il Progetto</button>
+                    <button class="btn btn-danger" type="submit"> Nuovo Progetto</button>
                     <button class="btn btn-warning" type="reset" onclick="resetImage()">Reset</button>
                 </div>
 

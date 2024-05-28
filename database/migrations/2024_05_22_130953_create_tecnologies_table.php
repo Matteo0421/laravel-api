@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tecnologies', function (Blueprint $table) {
             $table->id();
-            $table->string('title',100);
+            $table->string('title',30);
             $table->string('slug', 120)->unique();
             $table->string('language', 100);
             $table->smallInteger('file')->unsigned();

@@ -21,4 +21,8 @@ class Project extends Model
         'image',
         'image_original_name',
     ];
+
+    public function tecnologies(){
+        return $this->belongsToMany(Tecnology::class);
+    }
 }

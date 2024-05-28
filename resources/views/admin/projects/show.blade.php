@@ -12,6 +12,13 @@
     <div class="col m-4">
         <span class="fs-2 ">Descrizione</span>
         <p class="mt-3"> {{$project->description}}</p>
+        <span class="fs-2 ">Tecnologie</span>
+        @if (count($project->tecnologies) > 0)
+            <p> @foreach ($project->tecnologies as $tecnology )
+                <span class="badge text-bg-danger">{{$tecnology->title}}</span>
+            @endforeach</p>
+
+        @endif
         <div class="col  my-3">
             <h3>Linguaggio</h3>
             <p class="pe-2">{{$project->language}} </p>
