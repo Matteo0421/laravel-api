@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Tecnology;
 use App\Functions\Helper;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $tecnologies = Tecnology::all();
+        return view('admin.projects.create', compact('tecnologies'));
     }
     /**
      * Store a newly created resource in storage.
@@ -55,6 +57,10 @@ class ProjectController extends Controller
 
         // Salva il progetto
         $new_project->save();
+
+        if(array_key_exists('tecnologies', $form_data)){
+            $new_project->tecnologies()->attach($form_data['tecnologies']);
+        }
 
         return redirect()->route('admin.projects.show', $new_project);
     }
