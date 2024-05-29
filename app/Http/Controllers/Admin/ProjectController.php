@@ -78,9 +78,10 @@ class ProjectController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Project $project)
-    {
-        return view('admin.projects.edit', compact('project'));
-    }
+{
+    $tecnologies = Tecnology::all();
+    return view('admin.projects.edit', compact('project', 'tecnologies'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -89,13 +90,36 @@ class ProjectController extends Controller
     {
         $form_data = $request->all();
 
+        // Genera lo slug solo se il titolo è cambiato
         if ($form_data['title'] !== $project->title) {
             $form_data['slug'] = Helper::generateSlug($form_data['title'], new Project());
         } else {
             $form_data['slug'] = $project->slug;
         }
 
+        // Gestione del caricamento dell'immagine
+        if ($request->hasFile('image')) {
+            // Elimina l'immagine esistente se presente
+            if ($project->image) {
+                Storage::delete($project->image);
+            }
+            // Carica la nuova immagine
+            $image_path = Storage::put('uploads', $form_data['image']);
+            $original_name = $request->file('image')->getClientOriginalName();
+            $form_data['image'] = $image_path;
+            $form_data['image_original_name'] = $original_name;
+        }
+
+        // Aggiorna il progetto
         $project->update($form_data);
+
+        // Aggiorna le relazioni con le tecnologie
+        if (isset($form_data['tecnologies'])) {
+            $project->tecnologies()->sync($form_data['tecnologies']);
+        } else {
+            // Se non vengono selezionate nuove tecnologie, rimuovi tutte le relazioni esistenti
+            $project->tecnologies()->detach();
+        }
 
         return redirect()->route('admin.projects.show', $project);
     }

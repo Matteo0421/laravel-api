@@ -65,7 +65,7 @@
                     <div class="btn-group btn-group-sm" role="group">
                         @foreach ($tecnologies as $tecnology)
                             <input
-                                name="tags[]"
+                                name="tecnologies[]"
                                 id="tag_{{ $tecnology->id }}"
                                 class="btn-check"
                                 autocomplete="off"

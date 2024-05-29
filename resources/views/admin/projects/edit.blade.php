@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <form action="{{ route('admin.projects.update', $project->id) }}" method="POST">
+            <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -57,6 +57,27 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Tecnologie:</label>
+                    <div class="btn-group btn-group-sm" role="group">
+                        @foreach ($tecnologies as $tecnology)
+                            <input
+                                name="tecnologies[]"
+                                id="tag_{{ $tecnology->id }}"
+                                class="btn-check"
+                                autocomplete="off"
+                                type="checkbox"
+                                value="{{ $tecnology->id }}"
+                                @if (in_array($tecnology->id, $project->tecnologies->pluck('id')->toArray()))
+                                    checked
+                                @endif
+                            >
+                            <label class="btn btn-outline-primary" for="tag_{{ $tecnology->id }}">{{ $tecnology->title }}</label>
+                        @endforeach
+                    </div>
+                </div>
+
 
 
                 <div class="mb-3">

@@ -28,7 +28,16 @@ class TypeController extends Controller
 
 
     }
-   public function store(Request $request)
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Type $type)
+    {
+        return view('admin.types.edit', compact('type'));
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'title' => ['required', 'string', 'max:100'],
@@ -61,13 +70,6 @@ class TypeController extends Controller
         return redirect()->route('admin.types.index')->with('success', 'Progetto creato con successo.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Type $type)
-    {
-        return view('admin.types.edit', compact('type'));
-    }
 /**
  * Update the specified resource in storage.
  */
@@ -92,6 +94,11 @@ public function update(Request $request, Type $type)
 }
 
 
+public function create()
+{
+    return view('admin.types.create');
+}
+
 
     /**
      * Remove the specified resource from storage.
@@ -103,3 +110,4 @@ public function update(Request $request, Type $type)
         return redirect()->route('admin.types.index')->with('success', 'Tipo eliminato con successo.');
     }
 }
+

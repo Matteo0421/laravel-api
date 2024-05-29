@@ -16,13 +16,8 @@
 </div>
 @endif
 
-<div class="d-flex my-4 p-3">
-    <form action="{{ route('admin.types.store') }}" method="POST" class="d-flex">
-        @csrf
-        <input type="search" name="title" placeholder="Nuova Progetto" aria-label="Search" class="form-control me-2">
-        <input type="search" name="categories" placeholder="Linguaggio Usato" aria-label="Search" class="form-control me-2">
-        <button class="btn btn-outline-success" type='submit'>Invia</button>
-    </form>
+<div class=" my-4 p-3">
+    <a href="{{ route('admin.types.create') }}" class="btn btn-danger">Crea nuova tipologia</a>
 </div>
 
 <div>
@@ -66,6 +61,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

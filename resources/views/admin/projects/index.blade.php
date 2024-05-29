@@ -5,10 +5,14 @@
 <div class="container">
     <h1 class="text-center m-4">I MIEI PROGETTI</h1>
 
-    <!-- Barra di ricerca -->
+    <!-- Barra di ricerca e pulsante "Crea un nuovo progetto" -->
     <div class="row mb-3">
-        <div class="col-md-6">
-            <input type="text" id="search-input" class="form-control" placeholder="Cerca progetti...">
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <div class="d-flex">
+                <input type="text" id="search-input" class="form-control" placeholder="Cerca progetti...">
+                <button id="search-button" class="btn btn-danger ms-2">Cerca</button>
+            </div>
+            <a href="{{ route('admin.projects.create') }}" class="btn btn-danger">Crea un nuovo progetto</a>
         </div>
     </div>
 
@@ -71,8 +75,11 @@
 </div>
 
 <script>
-    document.getElementById('search-input').addEventListener('keyup', function() {
-        const searchValue = this.value.toLowerCase();
+    document.getElementById('search-input').addEventListener('keyup', filterProjects);
+    document.getElementById('search-button').addEventListener('click', filterProjects);
+
+    function filterProjects() {
+        const searchValue = document.getElementById('search-input').value.toLowerCase();
         const projectsTable = document.getElementById('projects-table');
         const rows = projectsTable.getElementsByTagName('tr');
 
@@ -88,10 +95,7 @@
                 rows[i].style.display = 'none';
             }
         }
-
-
-    });
+    }
 </script>
 
 @endsection
-
