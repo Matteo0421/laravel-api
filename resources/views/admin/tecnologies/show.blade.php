@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <a href="{{ route('admin.tecnologies.index') }}" class="btn btn-primary">Torna Indietro</a>
+    <a href="{{ route('admin.tecnologies.index') }}" class="btn btn-danger">Torna Indietro</a>
 </div>
 
 @endsection

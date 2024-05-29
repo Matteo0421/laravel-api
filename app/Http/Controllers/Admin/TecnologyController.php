@@ -37,7 +37,6 @@ class TecnologyController extends Controller
         $request->validate([
             'title' => 'required|min:3|max:100',
             'language' => 'required|min:2|max:100',
-            'file' => 'required|min:3|max:255', // Esempio di validazione per il campo file
         ]);
 
         $tecnology->update($request->all());

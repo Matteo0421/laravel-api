@@ -46,18 +46,6 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="file" class="form-label">File</label>
-                    <input
-                        name="file"
-                        type="file"
-                        class="form-control @error('file') is-invalid @enderror"
-                        id="file">
-                    @error('file')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
                 <div class="mb-4">
                     <button class="btn btn-danger" type="submit">Aggiorna la Tecnologia</button>
                     <button class="btn btn-warning" type="reset">Reset</button>
