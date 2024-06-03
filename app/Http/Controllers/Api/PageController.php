@@ -9,7 +9,7 @@ use App\Models\Project;
 class PageController extends Controller
 {
     public function index(){
-        $projects = Project::all();
+        $projects = Project::paginate(5);
 
         return response()->json($projects);
 
